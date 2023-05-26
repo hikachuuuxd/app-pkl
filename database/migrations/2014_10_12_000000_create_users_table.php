@@ -16,18 +16,12 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->foreignId('role_id')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
             $table->text('alamat');
             $table->string('telp');
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('role', [
-                'guru',
-                'siswa', 
-                'dudi',
-                'ortu',
-                'admin'
-            ]);
             $table->timestamps();
         });
     }

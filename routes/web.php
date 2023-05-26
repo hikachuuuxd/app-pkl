@@ -21,10 +21,7 @@ use App\Http\Controllers\GuruJurnalController;
 |
 */
 
-Route::get('/', function () {
-    $title = "Home";
-    return view('home', compact('title'));
-});
+Route::get('/', [LoginController::class, 'index']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', function (){

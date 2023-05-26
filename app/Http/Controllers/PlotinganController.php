@@ -70,7 +70,7 @@ class PlotinganController extends Controller
         $plotingan->user_id_guru = $request->user_id_guru;
         $plotingan->kesediaan_id = $request->kesediaan_id;
         $plotingan->save();
-
+                        
         $siswa = $request->user_id_siswa;
         foreach($siswa as $item => $value)
         {

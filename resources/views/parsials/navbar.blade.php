@@ -1,7 +1,7 @@
      <!-- Header -->
      <div class="fixed w-full flex items-center justify-between h-14 text-white z-10">
         <div class="flex items-center justify-center md:justify-center pl-3 w-14 md:w-64 h-14 bg-blue-800 dark:bg-gray-800 border-none">
-          <span class="hidden md:block">{{ auth()->user()->nama  }}</span>
+          <span class="hidden md:block">{{ auth()->user()?->nama  }}</span>
         </div>
         <div class="flex justify-between items-center h-14 bg-blue-800 dark:bg-gray-800 header-right">
           <div class="bg-white rounded flex items-center w-full max-w-xl mr-4 p-2 shadow-sm border border-gray-200">
