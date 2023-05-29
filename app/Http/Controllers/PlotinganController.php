@@ -52,7 +52,6 @@ class PlotinganController extends Controller
             'kesediaans' => Kesediaan::with('dudi')->get(),
             'siswas' => Siswa::with('user')->get(),
 
- 
         ]);
     }
 
@@ -70,17 +69,21 @@ class PlotinganController extends Controller
         $plotingan->user_id_guru = $request->user_id_guru;
         $plotingan->kesediaan_id = $request->kesediaan_id;
         $plotingan->save();
-                        
+
+        $jurusan = $request->jurusan_id;
         $siswa = $request->user_id_siswa;
         foreach($siswa as $item => $value)
         {
             $detail = [
-                'plotingan_id' => $plotingan->id, 
-                'user_id_siswa' => $siswa[$item],
+                'plotingan_id' => $plotingan->id,
+                'user_id_siswa' => $siswa[$item], 
+                'jurusan_id' => $jurusan[$item],
+              
             ];
-        
          Bimbingan::create($detail);
         }
+
+ 
 
         return redirect()->route('plotingan.index')->with('success', 'Plotingan baru berhasil ditambahkan!');
     }
@@ -93,7 +96,17 @@ class PlotinganController extends Controller
      */
     public function show($id)
     {
-        //
+        if (! Gate::allows('admin')) {
+            abort(403);
+        }
+
+        return view('dashboard.plotingan.create', [
+            'title' => 'Plotingan',
+            'gurus' => Guru::with('user')->get(),
+            'kesediaan' => Kesediaan::find($id),
+            'siswas' => Siswa::with('user')->get(),
+
+        ]);
     }
 
     /**

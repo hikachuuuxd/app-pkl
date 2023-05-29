@@ -9,6 +9,11 @@ class Plotingan extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    protected $fillable = [
+        'tanggal', 
+        'kesediaan_id', 
+        'user_id_guru'
+    ];
     public function guru()
     {
         return $this->belongsTo(User::class, 'user_id_guru');

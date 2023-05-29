@@ -11,7 +11,7 @@ class Kompetensi extends Model
     protected $guarded = ['id'];
     protected $fillable = [
         'kesediaan_id',
-        'jurusan',
+        'jurusan_id',
         'jumlah'
     ];
 
@@ -19,4 +19,8 @@ class Kompetensi extends Model
     // {
     //     return $this->belongsToMany(Kesediaan::class, 'kesediaan_kompetensis');
     // }
+
+    public function jurusan(){
+        return $this->belongsTo(Jurusan::class);
+    }
 }

@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kompetensis', function (Blueprint $table) {
+        Schema::create('jurusan_siswas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kesediaan_id')->references('id')->on('kesediaans')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('jurusan_id')->references('id')->on('jurusans');
-            $table->integer('jumlah');
+            $table->string('jurusan_id');
+            $table->integer('user_id_siswa')->unique();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kompetensis');
+        Schema::dropIfExists('jurusan_siswas');
     }
 };

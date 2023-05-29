@@ -9,7 +9,11 @@ class Bimbingan extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    protected $fillable = ['plotingan_id','user_id_siswa', 'user_id_guru', 'kesediaan_id'];
+    protected $fillable = [
+        'plotingan_id',
+        'jurusan_id',
+        'user_id_siswa', 
+    ];
 
     public function siswa()
     {

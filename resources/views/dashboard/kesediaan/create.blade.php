@@ -9,7 +9,13 @@
             @csrf
             
         <div class="flex justify-center flex-wrap" id="form">
-            <input type="text" name="jurusan[]" id="jurusan" placeholder="kompetensi"  class="w-4/5 p-2 m-4  text-purple-500 border-b-2 bg-transparent">
+            <select name="jurusan_id[]" id=""  class="w-4/5 p-2 m-4  text-purple-500 border-b-2 bg-transparent">
+              
+                @foreach ($jurusans as $jurusan)
+                    <option value="{{ $jurusan->id }}">{{ $jurusan->nama }}</option>
+                @endforeach
+            </select>
+
             <input type="number" name="jumlah[]" id="jumlah"  class="w-4/5 p-2 m-4   text-purple-500 border-b-2 bg-transparent" placeholder="jumlah">
 
 
@@ -34,7 +40,11 @@
     document.getElementById('tambah').addEventListener('click', function(){
     let content = document.getElementById('form')
     let input = `
-        <input type="text" name="jurusan[]" id="jurusan" placeholder="kompetensi"  class="w-4/5 p-2 m-4  text-purple-500 border-b-2 bg-transparent">
+    <select name="jurusan_id[]" id=""  class="w-4/5 p-2 m-4  text-purple-500 border-b-2 bg-transparent">
+                @foreach ($jurusans as $jurusan)
+                    <option value="{{ $jurusan->id }}">{{ $jurusan->nama }}</option>
+                @endforeach
+            </select>
         <input type="number" name="jumlah[]" id="jumlah"  class="w-4/5 p-2 m-4   text-purple-500 border-b-2 bg-transparent" placeholder="jumlah"> 
     `
     content.insertAdjacentHTML('beforeend', input)

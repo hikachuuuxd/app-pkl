@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Kesediaan;
 use App\Models\Kompetensi;
 use App\Models\User;
+use App\Models\Jurusan;
 use Illuminate\Support\Facades\Gate;
 class KesediaanController extends Controller
 {
@@ -35,6 +36,7 @@ class KesediaanController extends Controller
         return view('dashboard.kesediaan.create',[
             'title' => "tambah",
             'dudis' => User::get()->where('role', 'dudi'),
+            'jurusans' => Jurusan::get(),
         ]);
     }
 
@@ -54,18 +56,20 @@ class KesediaanController extends Controller
         $kesediaan->user_id_dudi = Auth::id();
         $kesediaan->save();
 
-            $jurusan = $request->jurusan;
+            $jurusan_id = $request->jurusan_id;
             $jumlah = $request->jumlah;
-            foreach($jurusan as $item => $value)
+            foreach($jurusan_id as $item => $value)
             {
                 $input = [
                     'kesediaan_id' => $kesediaan->id, 
-                    'jurusan' => $jurusan[$item], 
+                    'jurusan_id' => $jurusan_id[$item], 
                     'jumlah' => $jumlah[$item],
                 ];
             $detail = Kompetensi::create($input);
-
+            
             }
+
+            
 
             return redirect()->route('kesediaan.index')->with('success', 'kesediaan baru berhasil di tambahkan!');
            

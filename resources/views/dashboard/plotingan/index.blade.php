@@ -6,8 +6,17 @@
         <h3 class="uppercase text-2xl m-6">Plotingan</h3>
         <hr class=" w-screen">
     </div>
+@can('admin')
+    <div class="w-48 h-40 bg-purple-100 m-4 p-3 block">
+        @foreach ($kesediaans as $kesediaan)
+        <div class="flex justify-start">
+            <p class="block">{{ $kesediaan->dudi->nama }}</p>
+        </div>
 
-    
+           <a href="{{ route('plotingan.show',  $kesediaan->id ) }}"> <button class="p-2 bg-purple-800 h-max block m-4 text-white">tambah</button></a>
+        @endforeach
+    </div>
+@endcan
     <div class="overflow-x-auto">
         
         <div class="max-w-screen max-h-screen flex items-center justify-center  font-sans overflow-hidden">

@@ -32,24 +32,24 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('guru', function( $user)
         {
             // return $guru->user_id === $user->id;
-            return $user->role == 'guru';
+            return $user->role_id == 4;
         });
         Gate::define('siswa', function($user)
         {
-            return $user->role == 'siswa';
+            return $user->role_id == 3;
         });
         Gate::define('ortu', function($user)
         {
-            return $user->role == 'ortu';
+            return $user->role_id == 5;
         });
         Gate::define('dudi', function( $user)
         {
-            return $user->role == 'dudi';
+            return $user->role_id == 2;
           
         });
         Gate::define('admin', function($user)
         {
-            return $user->role == 'admin';
+            return $user->role_id == 1;
         });
 
         

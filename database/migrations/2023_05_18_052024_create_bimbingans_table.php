@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('plotingan_id')->references('id')->on('plotingans')->onDelete('cascade');
             $table->integer('user_id_siswa')->unique();
+            $table->foreignId('jurusan_id')->references('id')->on('jurusans');
             $table->timestamps();
         });
     }
