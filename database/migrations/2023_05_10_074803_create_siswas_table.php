@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id_siswa');
             $table->boolean('status')->default(0);
-            // $table->string('kelas');
+            $table->foreignId('jurusan_id')->references('id')->on('jurusans');
             $table->timestamps();
         });
     }

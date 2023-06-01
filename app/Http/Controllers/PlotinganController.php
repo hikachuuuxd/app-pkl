@@ -10,6 +10,7 @@ use App\Models\Bimbingan;
 use App\Models\User;
 use App\Models\Siswa;
 use App\Models\Guru;
+use App\Models\Jurusan;
 use Illuminate\Http\Request;
 
 class PlotinganController extends Controller
@@ -50,7 +51,7 @@ class PlotinganController extends Controller
             'title' => 'Plotingan',
             'gurus' => Guru::with('user')->get(),
             'kesediaans' => Kesediaan::with('dudi')->get(),
-            'siswas' => Siswa::with('user')->get(),
+            'siswas' => Siswa::with('user', 'jurusan')->get(),
 
         ]);
     }
@@ -70,20 +71,15 @@ class PlotinganController extends Controller
         $plotingan->kesediaan_id = $request->kesediaan_id;
         $plotingan->save();
 
-        $jurusan = $request->jurusan_id;
-        $siswa = $request->user_id_siswa;
-        foreach($siswa as $item => $value)
+        $siswas = $request->user_id_siswa;
+        foreach($siswas as $siswa => $value)
         {
             $detail = [
                 'plotingan_id' => $plotingan->id,
-                'user_id_siswa' => $siswa[$item], 
-                'jurusan_id' => $jurusan[$item],
-              
+                'user_id_siswa' => $siswas[$siswa],  
             ];
          Bimbingan::create($detail);
         }
-
- 
 
         return redirect()->route('plotingan.index')->with('success', 'Plotingan baru berhasil ditambahkan!');
     }
@@ -101,11 +97,11 @@ class PlotinganController extends Controller
         }
 
         return view('dashboard.plotingan.create', [
+            'id' => $id,
             'title' => 'Plotingan',
             'gurus' => Guru::with('user')->get(),
             'kesediaan' => Kesediaan::find($id),
-            'siswas' => Siswa::with('user')->get(),
-
+            'siswas' => Siswa::has('jurusan')->with('user')->get(),
         ]);
     }
 

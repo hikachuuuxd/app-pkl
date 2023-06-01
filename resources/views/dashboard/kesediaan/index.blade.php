@@ -48,8 +48,8 @@
                           </td>
                           <td class="py-3 px-6 text-center">
                             <ul>
-                            @foreach ($kesediaan->kompetensis as $kompetensi)
-                            <li>{{ $kompetensi->jurusan->nama }} | {{ $kompetensi->jumlah }}</li> 
+                            @foreach ($kesediaan->jurusans as $kompetensi)
+                            <li>{{ $kompetensi->nama }} | {{ $kompetensi->jumlah }}</li> 
                             @endforeach
                           </ul>
                           </td>

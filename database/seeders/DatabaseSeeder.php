@@ -89,22 +89,27 @@ class DatabaseSeeder extends Seeder
        ]);
         \App\Models\Siswa::factory()->create([
            'user_id_siswa' => 3,
+           'jurusan_id' => 1
        
        ]);
         \App\Models\Siswa::factory()->create([
            'user_id_siswa' => 4,
+           'jurusan_id' => 1
        
        ]);
         \App\Models\Siswa::factory()->create([
            'user_id_siswa' => 5,
+           'jurusan_id' => 2
        
        ]);
         \App\Models\Siswa::factory()->create([
            'user_id_siswa' => 6,
+           'jurusan_id' => 2
        
        ]);
         \App\Models\Siswa::factory()->create([
            'user_id_siswa' => 7,
+           'jurusan_id' => 3
        
        ]);
         \App\Models\Guru::factory()->create([

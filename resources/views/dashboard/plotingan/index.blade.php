@@ -138,7 +138,7 @@
                                 <td class="py-3 px-6 text-center">
                                     <ul>
                                     @foreach ($admin->siswas as $siswa)
-                                        <li>{{ $siswa->siswa->nama }}</li>
+                                        <li>{{ $siswa->siswa->nama }} </li>
                                     @endforeach
                                     </ul>
                                 </td>

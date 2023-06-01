@@ -11,7 +11,6 @@ class Bimbingan extends Model
     protected $guarded = ['id'];
     protected $fillable = [
         'plotingan_id',
-        'jurusan_id',
         'user_id_siswa', 
     ];
 

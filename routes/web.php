@@ -23,7 +23,7 @@ use App\Http\Controllers\GuruJurnalController;
 
 Route::get('/', [LoginController::class, 'index']);
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'Role:dudi'])->group(function () {
     Route::get('dashboard', function (){
         $title = "Dashboard";
         return view('dashboard.index', compact('title'));

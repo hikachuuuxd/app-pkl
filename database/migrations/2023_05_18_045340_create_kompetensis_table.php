@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('kompetensis', function (Blueprint $table) {
-            $table->id();
+
             $table->foreignId('kesediaan_id')->references('id')->on('kesediaans')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('jurusan_id')->references('id')->on('jurusans');
             $table->integer('jumlah');

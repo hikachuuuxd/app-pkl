@@ -18,9 +18,10 @@ class KesediaanController extends Controller
      */
     public function index()
     {
+      
         return view('dashboard.kesediaan.index',[
             'title' => "tambah",
-            'kesediaans' => Kesediaan::with('kompetensis')->orWhere('user_id_dudi', Auth::id())->get(),
+            'kesediaans' => Kesediaan::with('jurusans')->orWhere('user_id_dudi', Auth::id())->get(),
         ]);
     }
 
@@ -56,26 +57,30 @@ class KesediaanController extends Controller
         $kesediaan->user_id_dudi = Auth::id();
         $kesediaan->save();
 
+        // $jurusan_id = $request->jurusan_id;
+        // $jumlah = $request->jumlah;
+
+    
+        
+
+
             $jurusan_id = $request->jurusan_id;
             $jumlah = $request->jumlah;
             foreach($jurusan_id as $item => $value)
             {
-                $input = [
-                    'kesediaan_id' => $kesediaan->id, 
+                $input = [ 
                     'jurusan_id' => $jurusan_id[$item], 
                     'jumlah' => $jumlah[$item],
                 ];
-            $detail = Kompetensi::create($input);
-            
+
+            $kesediaan->jurusans()->attach($kesediaan->id, $input);
+        
             }
 
-            
+            dd($kesediaan);
 
-            return redirect()->route('kesediaan.index')->with('success', 'kesediaan baru berhasil di tambahkan!');
+            // return redirect()->route('kesediaan.index')->with('success', 'kesediaan baru berhasil di tambahkan!');
            
-        
-        
-    
         
     }
 

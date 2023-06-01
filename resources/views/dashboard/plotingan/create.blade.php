@@ -45,7 +45,7 @@
                     <select name="user_id_siswa[]" id="" multiple class="w-4/5 p-2 m-2  text-purple-500 border-b-2 bg-transparent">
                         @foreach ($siswas as $siswa)
                         @if($siswa->status == 0)
-                         <option value="{{ $siswa->user_id_siswa }} " class="">{{ $siswa->user->nama }}</option>
+                         <option value="{{ $siswa->user_id_siswa }} " class="">{{ $siswa->user->nama }} | {{ $siswa->jurusan->nama }}</option>
                         @else
                         <option value="{{ $siswa->user_id_siswa }} " class="hidden">{{ $siswa->user->nama }}</option>
                         @endif
@@ -59,7 +59,7 @@
                     <select name="user_id_siswa[]" id="" multiple class="w-4/5 p-2 m-2  text-purple-500 border-b-2 bg-transparent">
                         @foreach ($siswas as $siswa)
                         @if($siswa->status == 0)
-                         <option value="{{ $siswa->user_id_siswa }} " class="">{{ $siswa->user->nama }}</option>
+                         <option value="{{ $siswa->user_id_siswa }} " class="">{{ $siswa->user->nama }} | {{ $siswa->jurusan->nama }}</option>
                         @else
                         <option value="{{ $siswa->user_id_siswa }} " class="hidden">{{ $siswa->user->nama }}</option>
                         @endif

@@ -10,7 +10,10 @@ class Jurnal extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
-   
+       
+    public function kesediaans(){
+        return $this->belongsToMany(Kesediaan::class, 'kompetensis', 'jurusan_id', 'kesediaan_id')->withPivot('jumlah');
+    }
     public function images() 
     {
         return $this->hasMany(Image::class);
