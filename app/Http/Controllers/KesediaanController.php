@@ -53,7 +53,6 @@ class KesediaanController extends Controller
    
       
         $kesediaan = new Kesediaan;
-        $kesediaan->tanggal = now();
         $kesediaan->user_id_dudi = Auth::id();
         $kesediaan->save();
 

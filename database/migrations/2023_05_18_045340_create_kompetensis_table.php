@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('kompetensis', function (Blueprint $table) {
 
-            $table->foreignId('kesediaan_id')->references('id')->on('kesediaans')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('jurusan_id')->references('id')->on('jurusans');
+            $table->foreignUuid('kesediaan_id')->constrained();
+            $table->foreignUuid('jurusan_id')->constrained();
             $table->integer('jumlah');
-            $table->timestamps();
+        
         });
     }
 

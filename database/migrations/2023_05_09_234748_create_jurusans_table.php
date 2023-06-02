@@ -15,20 +15,20 @@ return new class extends Migration
     public function up()
     {
         Schema::create('jurusans', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('nama');
             $table->timestamps();
         });
 
-        DB::table('jurusans')->insert(
-            [
-                ['nama' => 'Rekayasa Perangkat Lunak'],
-                ['nama' => 'Teknik Komputer dan Jaringan'], 
-                ['nama' => 'Multimedia'], 
-                ['nama' => 'Kimia Industri'],
-            ]
+        // DB::table('jurusans')->insert(
+        //     [
+        //         ['nama' => 'Rekayasa Perangkat Lunak'],
+        //         ['nama' => 'Teknik Komputer dan Jaringan'], 
+        //         ['nama' => 'Multimedia'], 
+        //         ['nama' => 'Kimia Industri'],
+        //     ]
                 
-            );
+        //     );
     }
 
     /**

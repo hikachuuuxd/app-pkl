@@ -14,9 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('kesediaans', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->foreignId('user_id_dudi')->references('id')->on('users');
-            $table->date('tanggal');
             $table->boolean('konfirmasi')->default(0);
             $table->boolean('status')->default(0);
             $table->timestamps();

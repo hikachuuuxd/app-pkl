@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('plotingans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kesediaan_id')->unique()->references('id')->on('kesediaans')->constrained();
+            $table->unsignedBigInteger('kesediaan_id')->unsigned();
             $table->integer('user_id_guru')->unique();
             $table->date('tanggal');
             $table->timestamps();

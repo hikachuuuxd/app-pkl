@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use App\Models\Jurusan;
+use App\Models\Siswa;
+use App\Models\Kesediaan;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -15,6 +17,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
     
+        $jurusans = ['RPL', 'MM', 'KA'];
+        foreach($jurusans as $jurusan){
+            Jurusan::create([
+                'nama' => $jurusan
+            ]);
+        }
         \App\Models\User::factory()->create([
             'nama' => 'Dudi 1',
            'email' => 'dudi1@example.com',
@@ -87,31 +95,45 @@ class DatabaseSeeder extends Seeder
        
          
        ]);
-        \App\Models\Siswa::factory()->create([
+
+     $jurusan = Jurusan::get('id');
+
+        Siswa::factory()->create([
            'user_id_siswa' => 3,
-           'jurusan_id' => 1
+           'jurusan_id' => $jurusan[0]
        
        ]);
-        \App\Models\Siswa::factory()->create([
+        Siswa::factory()->create([
            'user_id_siswa' => 4,
-           'jurusan_id' => 1
+           'jurusan_id' => $jurusan[0]
        
        ]);
-        \App\Models\Siswa::factory()->create([
+        Siswa::factory()->create([
            'user_id_siswa' => 5,
-           'jurusan_id' => 2
+           'jurusan_id' => $jurusan[1]
        
        ]);
-        \App\Models\Siswa::factory()->create([
+        Siswa::factory()->create([
            'user_id_siswa' => 6,
-           'jurusan_id' => 2
+           'jurusan_id' => $jurusan[1]
        
        ]);
-        \App\Models\Siswa::factory()->create([
+        Siswa::factory()->create([
            'user_id_siswa' => 7,
-           'jurusan_id' => 3
+           'jurusan_id' => $jurusan[2]
        
        ]);
+
+    Kesediaan::factory(2)->create()->each(function($e){
+        $jurusan = Jurusan::get('id');
+            $e->jurusans()->attach(
+               [
+                1 => ['jurusan_id' => $jurusan[0]->id, 'jumlah' => 3],
+                2 => ['jurusan_id' => $jurusan[2]->id, 'jumlah' => 3]
+               ]);
+        });
+
+
         \App\Models\Guru::factory()->create([
            'user_id_guru' => 9,
        
