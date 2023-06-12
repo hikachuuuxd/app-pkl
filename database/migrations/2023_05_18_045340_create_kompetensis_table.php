@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('kompetensis', function (Blueprint $table) {
 
-            $table->foreignUuid('kesediaan_id')->constrained();
-            $table->foreignUuid('jurusan_id')->constrained();
+            $table->foreignUuid('kesediaan_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignUuid('jurusan_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->integer('jumlah');
         
         });

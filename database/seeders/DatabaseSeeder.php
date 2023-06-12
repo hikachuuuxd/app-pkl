@@ -124,14 +124,14 @@ class DatabaseSeeder extends Seeder
        
        ]);
 
-    Kesediaan::factory(2)->create()->each(function($e){
-        $jurusan = Jurusan::get('id');
-            $e->jurusans()->attach(
-               [
-                1 => ['jurusan_id' => $jurusan[0]->id, 'jumlah' => 3],
-                2 => ['jurusan_id' => $jurusan[2]->id, 'jumlah' => 3]
-               ]);
-        });
+    // Kesediaan::factory(2)->create()->each(function($e){
+    //     $jurusan = Jurusan::get('id');
+    //         $e->jurusans()->attach(
+    //            [
+    //             1 => ['jurusan_id' => $jurusan[0]->id, 'jumlah' => 3],
+    //             2 => ['jurusan_id' => $jurusan[2]->id, 'jumlah' => 3]
+    //            ]);
+    //     });
 
 
         \App\Models\Guru::factory()->create([

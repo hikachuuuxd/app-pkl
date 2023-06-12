@@ -17,7 +17,9 @@
             </select>
 
             <input type="number" name="jumlah[]" id="jumlah"  class="w-4/5 p-2 m-4   text-purple-500 border-b-2 bg-transparent" placeholder="jumlah">
-
+            @error('jumlah')
+                <div class="text-red-950 bg-red-600 w-40 h-4 ">{{ $message }}</div>
+            @enderror
 
         </div>
 

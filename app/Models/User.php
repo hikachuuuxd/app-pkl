@@ -50,4 +50,7 @@ class User extends Authenticatable
     public function kesediaan(){
         return $this->hasMany(Kesediaan::class, 'user_id_dudi');
     }
+    public function siswa(){
+        return $this->hasOne(Siswa::class, 'user_id_siswa', 'id');
+    }
 }

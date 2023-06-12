@@ -10,17 +10,16 @@ class Kesediaan extends Model
 {
     use HasFactory;
     use HasUuids;
-    protected $guraded = ['id'];
+    protected $guarded = ['id'];
+    // protected $fillable = ['jurusan_id', 'jumlah', 'status'];
 
-    // public function kompetensis(){
-    //     return $this->hasMany(Kompetensi::class);
-    // }
+
 
     public function dudi(){
         return $this->belongsTo(User::class, 'user_id_dudi');
     }
     public function jurusans(){
-        return $this->belongsToMany(Jurusan::class, 'kompetensis', 'kesediaan_id', 'jurusan_id');
+        return $this->belongsToMany(Jurusan::class, 'kompetensis', 'kesediaan_id', 'jurusan_id')->withPivot('jumlah');;
     }
 
 }

@@ -21,7 +21,7 @@ class KesediaanController extends Controller
       
         return view('dashboard.kesediaan.index',[
             'title' => "tambah",
-            'kesediaans' => Kesediaan::with('jurusans')->orWhere('user_id_dudi', Auth::id())->get(),
+            'kesediaans' => Kesediaan::where('user_id_dudi', Auth::id())->get(),
         ]);
     }
 
@@ -36,7 +36,6 @@ class KesediaanController extends Controller
 
         return view('dashboard.kesediaan.create',[
             'title' => "tambah",
-            'dudis' => User::get()->where('role', 'dudi'),
             'jurusans' => Jurusan::get(),
         ]);
     }
@@ -50,35 +49,36 @@ class KesediaanController extends Controller
     public function store(Request $request)
     {
 
+        $input = $request->validate([
+            'jurusan_id' => ['required'], 
+            'jumlah' => ['required']
+    ]);
    
-      
         $kesediaan = new Kesediaan;
         $kesediaan->user_id_dudi = Auth::id();
         $kesediaan->save();
 
-        // $jurusan_id = $request->jurusan_id;
-        // $jumlah = $request->jumlah;
-
     
-        
-
-
+      
             $jurusan_id = $request->jurusan_id;
             $jumlah = $request->jumlah;
             foreach($jurusan_id as $item => $value)
             {
-                $input = [ 
-                    'jurusan_id' => $jurusan_id[$item], 
-                    'jumlah' => $jumlah[$item],
-                ];
+  
+            $input['jurusan_id'] = $jurusan_id[$item]; 
+            $input[  'jumlah'] = $jumlah[$item];
+    
 
             $kesediaan->jurusans()->attach($kesediaan->id, $input);
-        
             }
 
-            dd($kesediaan);
+            // $jurusans = [$request->jurusan_id];
+            // foreach($jurusans as $jurusan => $id){
+            //     $jurusans['jumlah'] = $request->jumlah[$jurusan];
+            // }
 
-            // return redirect()->route('kesediaan.index')->with('success', 'kesediaan baru berhasil di tambahkan!');
+            // $kesediaan->jurusans()->attach($jurusans);
+            return redirect()->route('kesediaan.index')->with('success', 'kesediaan baru berhasil di tambahkan!');
            
         
     }
@@ -102,7 +102,11 @@ class KesediaanController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('dashboard.kesediaan.edit', [
+            'title' => "edit",
+            'jurusans' => Jurusan::get(),
+            'kesediaan' => Kesediaan::find($id)
+        ]);
     }
 
     /**
@@ -112,9 +116,25 @@ class KesediaanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Kesediaan $kesediaan)
     {
-        //
+      Kesediaan::find($kesediaan->id);
+
+      $jurusan_id = $request->jurusan_id;
+      $jumlah = $request->jumlah;
+      foreach($jurusan_id as $item => $value)
+      {
+            $input['jurusan_id'] = $jurusan_id[$item]; 
+            $input[  'jumlah'] = $jumlah[$item];
+
+      $kesediaan->jurusans()->syncWithPivotValues($kesediaan->id, $input);
+
+      }
+    
+
+            return redirect()->back();
+        
+
     }
 
     /**
@@ -123,9 +143,10 @@ class KesediaanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Kesediaan $kesediaan)
     {
-        Kesediaan::Destroy($id);
+        Kesediaan::Destroy($kesediaan->id);
+        $kesediaan->jurusans()->detach('jurusan_id');
         return redirect()->route('kesediaan.index');
     }
 }

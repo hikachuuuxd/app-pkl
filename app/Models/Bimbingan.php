@@ -16,6 +16,7 @@ class Bimbingan extends Model
 
     public function siswa()
     {
-        return $this->belongsTo(User::class, 'user_id_siswa');
+        return $this->belongsTo(Siswa::class, 'user_id_siswa', 'user_id_siswa');
     }
+
 }

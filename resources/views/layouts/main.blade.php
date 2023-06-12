@@ -28,6 +28,7 @@
         alert.classList.add('hidden');
         }, 1500);
     }
+    
 </script>
 </body>
 </html>
