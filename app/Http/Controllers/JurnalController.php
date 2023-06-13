@@ -66,6 +66,8 @@ class JurnalController extends Controller
      */
     public function store(Request $request)
     {
+
+      
         $jurnal = new Jurnal;
         $jurnal->user_id_siswa = Auth::id();
         $jurnal->tanggal = now();
@@ -73,16 +75,24 @@ class JurnalController extends Controller
         $jurnal->isi = $request->isi;
         $jurnal->save();
         
-        $image = $request->file('image');
-        foreach($image as $item => $value)
-        {
-            $input = [
-                'jurnal_id' => $jurnal->id,
-                'image' => $image[$item]->store('image')
-            ];
-        $img = Image::create($input);
 
-       
+            if($request->hasFile('image')){
+                    $image = $request->file('image');
+                    foreach($image as $item => $value)
+                    {
+                        $path = '/asset/jurnal/';
+                        $time = now()->timestamp.'-';
+                        $filename = $path.$time.$image[$item]->getClientOriginalName();
+                        $image[$item]->move(public_path().'/asset/jurnal', $filename);
+
+                        $input = [
+                            'jurnal_id' => $jurnal->id,
+                            'image' => $filename
+                        ];
+
+                        Image::create($input);
+            };
+                
         }
 
         return redirect()->route('jurnal.index')->with('success', 'Jurnal Baru Berhasil di tambahkan!');
@@ -107,7 +117,10 @@ class JurnalController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('dashboard.jurnal.edit', [
+            'title' => 'Jurnal',
+            'jurnal' => Jurnal::find($id),
+        ]);
     }
 
     /**
@@ -119,6 +132,37 @@ class JurnalController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $jurnal = Jurnal::find($id);
+        $jurnal->update([
+            'isi' => $request->isi
+        ]);
+
+        if ($request->file('image')) {
+            foreach($jurnal->images()->pluck('image') as $image){
+                $path = public_path().Image::where('jurnal_id', $id)->get($image);
+
+                if (is_file($path)) {
+                    unlink($path);
+                }
+            }
+
+            $image = $request->file('image');
+            foreach($image as $item => $value)
+            {
+                $path = '/asset/jurnal/';
+                $time = now()->timestamp.'-';
+                $filename = $path.$time.$image[$item]->getClientOriginalName();
+                $image[$item]->move(public_path().'/asset/jurnal', $filename);
+
+                $input = [
+                    'jurnal_id' => $jurnal->id,
+                    'image' => $filename
+                ];
+
+                Image::update($input);
+    };
+
+        }
         
     }
 

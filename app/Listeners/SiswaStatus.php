@@ -9,9 +9,12 @@ use Illuminate\Queue\InteractsWithQueue;
 
 class SiswaStatus
 {
+
+
     /**
      * Create the event listener.
      *
+     
      * @return void
      */
     public function __construct()
@@ -27,9 +30,13 @@ class SiswaStatus
      */
     public function handle(PlotinganStatus $event)
     {
-        // $siswa = Siswa::find($event->plotingan->);
-        // $siswa->update([
-        //     'status' => 1,
-        // ]);
+
+        foreach($event->plotingan->siswas()->pluck('user_id_siswa') as $siswa){
+            $siswa = Siswa::where('user_id_siswa', $siswa );
+            $siswa->update([
+                'status' => 1,
+            ]);
+        }
+
     }
 }

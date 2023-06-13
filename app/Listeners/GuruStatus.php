@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Models\Guru;
+use App\Models\User;
 use App\Events\PlotinganStatus;
 use App\Models\Kesediaan;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -28,7 +29,7 @@ class GuruStatus
      */
     public function handle(PlotinganStatus $event)
     {
-        $guru = Guru::find($event->plotingan->user_id_guru);
+        $guru = Guru::where('user_id_guru', $event->plotingan->user_id_guru)->firstOrFail();
         $guru->update([
             'status' => 1,
         ]);

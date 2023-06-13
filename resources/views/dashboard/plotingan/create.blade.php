@@ -20,9 +20,9 @@
                     
                         @foreach ($gurus as $guru)
                         @if($guru->status == 0)
-                        <option value="{{ $guru->id }}">{{ $guru->user->nama }}</option>
+                        <option value="{{ $guru->user_id_guru }}">{{ $guru->user->nama }}</option>
                         @else
-                        <option value="{{ $guru->id }}" class="hidden">{{ $guru->user->nama }}</option>
+                        <option value="{{ $guru->user_id_guru }}" class="hidden">{{ $guru->user->nama }}</option>
                         @endif
                     @endforeach
                     </select>
@@ -37,9 +37,9 @@
                 <select name="user_id_siswa[]" id="" multiple class="w-4/5 p-2 m-2  text-purple-500 border-b-2 bg-transparent">
                     @foreach ($siswas as $siswa)
                     @if($siswa->status == 0 && $jurusan->pivot->jurusan_id == $siswa->jurusan_id)
-                     <option value="{{ $siswa->id }} " class="">{{ $siswa->user->nama }} | {{ $siswa->jurusan->nama }}</option>
+                     <option value="{{ $siswa->user_id_siswa }} " class="">{{ $siswa->user->nama }} | {{ $siswa->jurusan->nama }}</option>
                     @else
-                    <option value="{{ $siswa->id }} " class="hidden">{{ $siswa->user->nama }}</option>
+                    <option value="{{ $siswa->user_id_siswa }} " class="hidden">{{ $siswa->user->nama }}</option>
                     @endif
                     @endforeach
                 </select>
