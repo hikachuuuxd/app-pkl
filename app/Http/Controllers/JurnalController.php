@@ -138,14 +138,14 @@ class JurnalController extends Controller
         ]);
 
         if ($request->file('image')) {
-            foreach($jurnal->images()->pluck('image') as $image){
-                $path = public_path().Image::where('jurnal_id', $id)->get($image);
+    
+        $path = public_path().Image::where('jurnal_id', $id)->get('image');
 
                 if (is_file($path)) {
                     unlink($path);
-                }
-            }
 
+                }
+                
             $image = $request->file('image');
             foreach($image as $item => $value)
             {
@@ -156,12 +156,14 @@ class JurnalController extends Controller
 
                 $input = [
                     'jurnal_id' => $jurnal->id,
-                    'image' => $filename
                 ];
 
-                Image::update($input);
-    };
+            
 
+            
+            };
+                
+       
         }
         
     }
