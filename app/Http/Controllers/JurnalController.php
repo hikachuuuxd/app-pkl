@@ -74,7 +74,6 @@ class JurnalController extends Controller
         $jurnal->plotingan_id = $request->plotingan_id;
         $jurnal->isi = $request->isi;
         $jurnal->save();
-        
 
             if($request->hasFile('image')){
                     $image = $request->file('image');
@@ -130,22 +129,22 @@ class JurnalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Jurnal $jurnal, Image $image)
     {
-        $jurnal = Jurnal::find($id);
         $jurnal->update([
             'isi' => $request->isi
         ]);
 
-        if ($request->file('image')) {
+        if ($request->hasfile('image')) {
     
-        $path = public_path().Image::where('jurnal_id', $id)->get('image');
+        foreach($jurnal->images->pluck('image') as $image){
+        $path = public_path().$image;
 
                 if (is_file($path)) {
                     unlink($path);
-
                 }
-                
+        }
+
             $image = $request->file('image');
             foreach($image as $item => $value)
             {
@@ -156,16 +155,16 @@ class JurnalController extends Controller
 
                 $input = [
                     'jurnal_id' => $jurnal->id,
+                    'image' => $filename
                 ];
 
-            
+            $jurnal->images()->create($input);
 
-            
             };
                 
        
         }
-        
+        return redirect()->route('jurnal.index')->with('success', 'Jurnal di Update');
     }
 
     /**
