@@ -81,8 +81,9 @@ class JurnalController extends Controller
                     {
                         $path = '/asset/jurnal/';
                         $time = now()->timestamp.'-';
-                        $filename = $path.$time.$image[$item]->getClientOriginalName();
-                        $image[$item]->move(public_path().'/asset/jurnal', $filename);
+                        $name = $time.$image[$item]->getClientOriginalName();
+                        $filename = $path.$name;
+                        $image[$item]->move(public_path().$path, $name);
 
                         $input = [
                             'jurnal_id' => $jurnal->id,
@@ -131,39 +132,45 @@ class JurnalController extends Controller
      */
     public function update(Request $request, Jurnal $jurnal, Image $image)
     {
-        $jurnal->update([
-            'isi' => $request->isi
-        ]);
 
-        if ($request->hasfile('image')) {
-    
-        foreach($jurnal->images->pluck('image') as $image){
-        $path = public_path().$image;
 
-                if (is_file($path)) {
-                    unlink($path);
-                }
+   
+    if($request->hasFile('image'))
+    {
+    foreach($jurnal->images as $image)
+    {
+
+        if (is_file(public_path().$image->image) || $request->oldImage)
+        {
+            unlink(public_path().$image->image);
+            $jurnal->images()->delete($image->image);
         }
-
-            $image = $request->file('image');
-            foreach($image as $item => $value)
+    }
+      
+            foreach($request->file('image') as $item => $value)
             {
                 $path = '/asset/jurnal/';
                 $time = now()->timestamp.'-';
-                $filename = $path.$time.$image[$item]->getClientOriginalName();
-                $image[$item]->move(public_path().'/asset/jurnal', $filename);
+                $name = $time.$request->file('image')[$item]->getClientOriginalName();
+                $filename = $path.$name;
+                $request->file('image')[$item]->move(public_path().$path, $name);
 
                 $input = [
                     'jurnal_id' => $jurnal->id,
                     'image' => $filename
                 ];
-
-            $jurnal->images()->create($input);
-
+            
+                Image::create($input);
             };
-                
-       
-        }
+
+      
+    }
+    
+
+    $jurnal->update([
+        'isi' => $request->isi
+   ]);
+         
         return redirect()->route('jurnal.index')->with('success', 'Jurnal di Update');
     }
 
@@ -173,14 +180,25 @@ class JurnalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Jurnal $jurnal, Image $img)
+    public function destroy(Jurnal $jurnal)
     {   
+
         if($jurnal->images()){
-            foreach($jurnal->images as $image){
-                Storage::delete($image->image);
+
+            foreach($jurnal->images->pluck('image') as $image){
+                $path = public_path().$image;
+        
+                        if (is_file($path)) {
+                            unlink($path);
+                        }
+            
+                $jurnal->images()->delete($image);
             }
+
+            Jurnal::destroy($jurnal->id);
         }
-        Jurnal::destroy($jurnal->id);
+
+   
         return redirect()->route('jurnal.index');
     }
 
