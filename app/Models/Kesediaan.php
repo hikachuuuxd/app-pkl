@@ -19,7 +19,7 @@ class Kesediaan extends Model
         return $this->belongsTo(User::class, 'user_id_dudi');
     }
     public function jurusans(){
-        return $this->belongsToMany(Jurusan::class, 'kompetensis', 'kesediaan_id', 'jurusan_id')->withPivot('jumlah');;
+        return $this->belongsToMany(Jurusan::class, 'kompetensis', 'kesediaan_id', 'jurusan_id')->withPivot('jumlah');
     }
 
 }

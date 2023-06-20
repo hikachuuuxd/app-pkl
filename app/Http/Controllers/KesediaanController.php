@@ -118,7 +118,12 @@ class KesediaanController extends Controller
      */
     public function update(Request $request, Kesediaan $kesediaan)
     {
-      Kesediaan::find($kesediaan->id);
+      
+    if($request->jurusan_id || $request->jumlah){
+       foreach($kesediaan->jurusans as $jurusan){
+        $kesediaan->jurusans()->detach($jurusan->id);
+       }
+    }
 
       $jurusan_id = $request->jurusan_id;
       $jumlah = $request->jumlah;
@@ -127,12 +132,13 @@ class KesediaanController extends Controller
             $input['jurusan_id'] = $jurusan_id[$item]; 
             $input[  'jumlah'] = $jumlah[$item];
 
-      $kesediaan->jurusans()->syncWithPivotValues($kesediaan->id, $input);
+            $kesediaan->jurusans()->attach($kesediaan->id, $input);
 
       }
+      
     
 
-            return redirect()->back();
+            return redirect()->route('kesediaan.index')->with('success', 'kesediaan baru berhasil di tambahkan!');
         
 
     }

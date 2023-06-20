@@ -13,13 +13,9 @@
     
 @foreach ($kesediaan->jurusans as $jurusan)
 <select name="jurusan_id[]" id=""  class="w-4/5 p-2 m-4  text-purple-500 border-b-2 bg-transparent">   
-    @foreach ($jurusans as $kompetensi)
-        @if($jurusan->pivot->jurusan_id == $kompetensi->id)
-        <option value="{{ $kompetensi->id }}"   >{{ $kompetensi->nama }}</option>
-        @endif
-    @endforeach
+        <option value="{{ $jurusan->id }}"   >{{ $jurusan->nama }}</option>
 </select>
-        <input type="number" name="jumlah[]" id="jumlah" value="{{ old('jumlah[]', $jurusan->pivot->jumlah) }}"  class="w-4/5 p-2 m-4   text-purple-500 border-b-2 bg-transparent" placeholder="jumlah" >
+<input type="number" name="jumlah[]" id="jumlah" value="{{ old('jumlah[]', $jurusan->pivot->jumlah) }}"  class="w-4/5 p-2 m-4   text-purple-500 border-b-2 bg-transparent" placeholder="jumlah" >
 @endforeach
         </div>
 
@@ -36,33 +32,8 @@
 </div>
 
 
-<script>
 
-// for(let i = 0; i<kesediaan['jurusans'].length; i++){
-//         <select name="jurusan_id[]" id=""  class="w-4/5 p-2 m-4  text-purple-500 border-b-2 bg-transparent">
-//                 @foreach ($jurusans as $jurusan)
-//                     <option value="{{ $jurusan->id }}" @foreach($kesediaan->jurusans as $kompetensi) {{ old('jurusan_id[]', $kesediaan->id ) == $jurusan->id? 'selected':null}} @endforeach>{{ $jurusan->nama }}</option>
-//                 @endforeach
-//             </select>
-// }
 
-//     document.getElementById('tambah').addEventListener('click', function(){
-//     let content = document.getElementById('form')
-//     let input = `
-//     <select name="jurusan_id[]" id=""  class="w-4/5 p-2 m-4  text-purple-500 border-b-2 bg-transparent">
-//                 @foreach ($jurusans as $jurusan)
-//                     <option value="{{ $jurusan->id }}" @foreach($kesediaan->jurusans as $kompetensi) {{ old('jurusan_id[]', $kesediaan->id ) == $jurusan->id? 'selected':null}} @endforeach>{{ $jurusan->nama }}</option>
-//                 @endforeach
-//             </select>
-//         <input type="number" name="jumlah[]" id="jumlah"  class="w-4/5 p-2 m-4   text-purple-500 border-b-2 bg-transparent" placeholder="jumlah"> 
-//     `
-//     content.insertAdjacentHTML('beforeend', input)
-  
-    
-    
-    
-// })
-</script>
 
 
 @endsection
